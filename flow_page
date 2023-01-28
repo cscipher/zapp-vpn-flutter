@@ -1,0 +1,60 @@
+- splash page
+- login page
+- home page
+- server selection page
+- speed test page
+- support page
+- settings page
+- privacy policy
+- theme switch toggler
+- share sheet
+- agree & continue page
+
+
+
+
+app open ad
+    |
+splash
+    |
+agree & continue (first time)
+    |
+login (first time)
+    |
+home page---
+            |- server page (shortcut)
+            |- premium page (shortcut)
+            |- side Drawer---
+                            |- Server page
+                            |- get premium
+                            |- speed test page
+                            |- Share app dialog
+                            |- privacy policy page
+                            |- theme switch toggler
+                            |- Upgrade to premium fixed sheet
+
+
+bloc -> homepage
+cubit -> speedtest
+
+
+
+ui--
+    |- pages--
+    |         |- <page>
+    |         |- widgets
+    |
+    |- common
+
+bloc
+
+cubit
+
+utils
+
+repositories
+
+Network--
+        |- api_services
+        |- dio configs/setup
+        |- 
