@@ -2,10 +2,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:zapp_vpn/src/ui/common/colors.dart';
+import 'package:zapp_vpn/src/ui/common/zapp_color_constants.dart';
 
 class ThemeConfig {
-  final bool isDarkMode;
+  bool isDarkMode;
   late final StreamController<bool> _themeModeStreamController;
   ThemeConfig({this.isDarkMode = false}) {
     _themeModeStreamController = StreamController();
@@ -17,19 +17,26 @@ class ThemeConfig {
   ThemeData getCurrentThemeConfig(BuildContext context) {
     return ThemeData(
       backgroundColor: isDarkMode
-          ? ColorConstants.backgroundDark
-          : ColorConstants.backgroundLight,
+          ? ZappColorConstants.backgroundDark
+          : ZappColorConstants.backgroundLight,
       scaffoldBackgroundColor: isDarkMode
-          ? ColorConstants.backgroundDark
-          : ColorConstants.backgroundLight,
-      primaryColor: ColorConstants.primarySwatch,
+          ? ZappColorConstants.backgroundDark
+          : ZappColorConstants.backgroundLight,
+      primaryColor: isDarkMode
+          ? ZappColorConstants.primaryColorDark
+          : ZappColorConstants.primaryColorLight,
+      iconTheme: IconThemeData(
+        color: isDarkMode
+            ? ZappColorConstants.primaryTextDark
+            : ZappColorConstants.primaryTextLight,
+      ),
       textTheme: Theme.of(context).textTheme.apply(
             bodyColor: isDarkMode
-                ? ColorConstants.primaryTextDark
-                : ColorConstants.primaryTextLight,
+                ? ZappColorConstants.primaryTextDark
+                : ZappColorConstants.primaryTextLight,
             displayColor: isDarkMode
-                ? ColorConstants.primaryTextDark
-                : ColorConstants.primaryTextLight,
+                ? ZappColorConstants.primaryTextDark
+                : ZappColorConstants.primaryTextLight,
           ),
     );
   }
