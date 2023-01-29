@@ -1,8 +1,11 @@
 class ZappAssetFiles {
   ZappAssetFiles._();
 
-  // logos
+  // images
   static const String zappLogo = '⚡️';
+  static const String premiumCrown = 'assets/images/crown.svg';
+  static const String premiumCrownV2 = 'assets/images/crownV2.png';
 
-  // svgs
+  // lottie
+  static const String thumderLottie = 'assets/lottie/thunder.json';
 }
