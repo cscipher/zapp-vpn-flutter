@@ -9,12 +9,17 @@ abstract class HomePageEvent extends Equatable {
 
 class HomePageInitialEvent extends HomePageEvent {}
 
+class HomePageLoadingEvent extends HomePageEvent {
+  final int x;
+  const HomePageLoadingEvent(this.x);
+}
+
 class HomePageToggleDarkModeEvent extends HomePageEvent {
   final Function(bool state) updateTheme;
   const HomePageToggleDarkModeEvent({required this.updateTheme});
 }
 
 class HomePageToggleConnectionEvent extends HomePageEvent {
-  final bool isConnected;
-  const HomePageToggleConnectionEvent(this.isConnected);
+  final VPNConnectionStatus vpnConnectionStatus;
+  const HomePageToggleConnectionEvent(this.vpnConnectionStatus);
 }
