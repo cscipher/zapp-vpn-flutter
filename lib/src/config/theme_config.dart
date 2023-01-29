@@ -16,6 +16,9 @@ class ThemeConfig {
 
   ThemeData getCurrentThemeConfig(BuildContext context) {
     return ThemeData(
+      secondaryHeaderColor: isDarkMode
+          ? ZappColorConstants.secondaryTextDark
+          : ZappColorConstants.secondaryTextLight,
       backgroundColor: isDarkMode
           ? ZappColorConstants.backgroundDark
           : ZappColorConstants.backgroundLight,
