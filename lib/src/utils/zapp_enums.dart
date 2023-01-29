@@ -1,0 +1,1 @@
+enum VPNConnectionStatus {notConnected, connecting, connected}
