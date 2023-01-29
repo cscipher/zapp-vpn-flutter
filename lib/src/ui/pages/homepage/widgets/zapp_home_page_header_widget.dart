@@ -2,10 +2,15 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zapp_vpn/src/config/theme_config.dart';
+import 'package:zapp_vpn/src/ui/common/zapp_asset_files.dart';
+import 'package:zapp_vpn/src/ui/common/zapp_image_button.dart';
 import 'package:zapp_vpn/src/ui/common/zapp_text_styles.dart';
+import 'package:zapp_vpn/src/ui/pages/homepage/bloc/home_page_bloc.dart';
 
 class ZappHomePageHeaderWidget extends StatefulWidget {
-  const ZappHomePageHeaderWidget({super.key});
+  final bool isDarkModeEnabled;
+
+  const ZappHomePageHeaderWidget({required this.isDarkModeEnabled, super.key});
 
   @override
   State<ZappHomePageHeaderWidget> createState() =>
@@ -15,8 +20,8 @@ class ZappHomePageHeaderWidget extends StatefulWidget {
 class _ZappHomePageHeaderWidgetState extends State<ZappHomePageHeaderWidget> {
   @override
   Widget build(BuildContext context) {
+    final bloc = Provider.of<HomePageBloc>(context);
     final themeConfig = Provider.of<ThemeConfig>(context);
-    bool toggle = themeConfig.isDarkMode;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -26,22 +31,31 @@ class _ZappHomePageHeaderWidgetState extends State<ZappHomePageHeaderWidget> {
           },
           icon: const Icon(EvaIcons.menu2Outline),
         ),
+        const Spacer(),
         Text(
           'ZAPP VPN',
-          style: ZappFontStyles.bodyMediumS(),
+          style: ZappFontStyles.bodyBoldS(),
         ),
-        Row(
-          children: [
-            IconButton(
-              onPressed: () {
-                themeConfig.themeModeSink.add(toggle);
-              },
-              icon: Icon(
-                toggle ? EvaIcons.toggleLeft : EvaIcons.toggleRight,
-              ),
-            ),
-          ],
-        )
+        const Spacer(),
+        IconButton(
+          onPressed: () {
+            bloc.add(HomePageToggleDarkModeEvent(
+              updateTheme: themeConfig.themeModeSink.add,
+            ));
+          },
+          icon: Icon(
+            widget.isDarkModeEnabled
+                ? EvaIcons.toggleRight
+                : EvaIcons.toggleLeft,
+            size: 30,
+          ),
+        ),
+        ZappImageButton(
+            path: ZappAssetFiles.premiumCrownV2,
+            size: 22,
+            onPressed: () {
+              // todo :premium navigation
+            })
       ],
     );
   }
