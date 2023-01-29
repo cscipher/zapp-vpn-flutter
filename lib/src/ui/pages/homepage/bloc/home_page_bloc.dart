@@ -14,8 +14,10 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on<HomePageToggleDarkModeEvent>(_handleDarkMode);
     on<HomePageToggleConnectionEvent>(_handleVpnConnection);
     on<HomePageLoadingEvent>(_mapHomePageLoadingEventToState);
+    on<HomePageVpnConnectedTimeStringEvent>(_buildConnectedSinceString);
 
-    timer = Timer.periodic(const Duration(seconds: 2), (timer) {
+    _splashPageCarousalTimer =
+        Timer.periodic(const Duration(seconds: 2), (timer) {
       if (x >= splashData.length) x = 0;
       add(HomePageLoadingEvent(x++));
     });
@@ -23,7 +25,22 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
   HomePageLoadedState? cachedLoadedState;
   int x = 0;
-  Timer? timer;
+  Timer? _splashPageCarousalTimer;
+  Timer? _connectionTimeStringBuildTimer;
+  Stopwatch? _connectionTimeStopwatch;
+
+  String get _constructConnectionSinceString {
+    if (_connectionTimeStopwatch == null) return '';
+    String hr = '', sec = '', min = '';
+    hr = _connectionTimeStopwatch!.elapsed.inHours.toString().padLeft(2, '0');
+    min = (_connectionTimeStopwatch!.elapsed.inMinutes % 60)
+        .toString()
+        .padLeft(2, '0');
+    sec = (_connectionTimeStopwatch!.elapsed.inSeconds % 60)
+        .toString()
+        .padLeft(2, '0');
+    return '$hr:$min:$sec';
+  }
 
   FutureOr<void> _mapHomePageLoadingEventToState(
       HomePageLoadingEvent event, Emitter<HomePageState> emit) {
@@ -33,7 +50,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   FutureOr<void> _mapHomePageInitialEventToState(
       HomePageInitialEvent event, Emitter<HomePageState> emit) async {
     await Future.delayed(const Duration(seconds: 5));
-    timer?.cancel();
+    _splashPageCarousalTimer?.cancel();
     cachedLoadedState = const HomePageLoadedState(isDarkModeEnabled: false);
     emit(cachedLoadedState!);
   }
@@ -51,15 +68,37 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   FutureOr<void> _handleVpnConnection(
       HomePageToggleConnectionEvent event, Emitter<HomePageState> emit) async {
     if (cachedLoadedState != null) {
-      cachedLoadedState = cachedLoadedState!
-          .copyWith(vpnConnectionStatus: event.vpnConnectionStatus);
+      _connectionTimeStringBuildTimer?.cancel();
+      cachedLoadedState = cachedLoadedState!.copyWith(
+        vpnConnectionStatus: event.vpnConnectionStatus,
+        // connectedSinceTime: null,
+      );
       emit(cachedLoadedState!);
       if (event.vpnConnectionStatus == VPNConnectionStatus.connecting) {
         await Future.delayed(const Duration(seconds: 3));
-        cachedLoadedState = cachedLoadedState!
-            .copyWith(vpnConnectionStatus: VPNConnectionStatus.connected);
+        _connectionTimeStopwatch = Stopwatch();
+        _connectionTimeStopwatch!.start();
+        cachedLoadedState = cachedLoadedState!.copyWith(
+          vpnConnectionStatus: VPNConnectionStatus.connected,
+          connectedSinceString: _constructConnectionSinceString,
+        );
+
         emit(cachedLoadedState!);
+        _connectionTimeStringBuildTimer =
+            Timer.periodic(const Duration(seconds: 1), (timer) {
+          add(HomePageVpnConnectedTimeStringEvent());
+        });
       }
+    }
+  }
+
+  FutureOr<void> _buildConnectedSinceString(
+      HomePageVpnConnectedTimeStringEvent event, Emitter<HomePageState> emit) {
+    if (cachedLoadedState != null) {
+      cachedLoadedState = cachedLoadedState!.copyWith(
+        connectedSinceString: _constructConnectionSinceString,
+      );
+      emit(cachedLoadedState!);
     }
   }
 }

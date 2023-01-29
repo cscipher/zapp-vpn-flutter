@@ -23,3 +23,5 @@ class HomePageToggleConnectionEvent extends HomePageEvent {
   final VPNConnectionStatus vpnConnectionStatus;
   const HomePageToggleConnectionEvent(this.vpnConnectionStatus);
 }
+
+class HomePageVpnConnectedTimeStringEvent extends HomePageEvent {}

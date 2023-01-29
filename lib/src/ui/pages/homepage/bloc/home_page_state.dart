@@ -5,7 +5,7 @@ abstract class HomePageState extends Equatable {
   const HomePageState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class HomePageInitialState extends HomePageState {}
@@ -15,7 +15,7 @@ class HomePageLoadingState extends HomePageState {
   const HomePageLoadingState({required this.dataIndex});
 
   @override
-  List<Object> get props => [dataIndex];
+  List<Object?> get props => [dataIndex];
 }
 
 class HomePageLoadedState extends HomePageState {
@@ -30,7 +30,7 @@ class HomePageLoadedState extends HomePageState {
   });
 
   @override
-  List<Object> get props =>
+  List<Object?> get props =>
       [isDarkModeEnabled, vpnConnectionStatus, connectedSinceString];
 
   HomePageLoadedState copyWith({

@@ -177,7 +177,7 @@ class _ZappHomePageConnectButtonWidgetState
                 ),
               if (isConnected)
                 Text(
-                  '00:12:44', //widget.connectedSinceString,
+                  widget.connectedSinceString, //widget.connectedSinceString,
                   style: ZappFontStyles.bodyBoldL(),
                 ),
             ],
