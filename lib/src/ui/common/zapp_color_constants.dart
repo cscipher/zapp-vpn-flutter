@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ZappColorConstants {
   ZappColorConstants._();
   static const backgroundLight = Color.fromARGB(255, 255, 255, 255);
-  static const backgroundDark = Color(0xFF03080C);
+  static const backgroundDark = Color.fromARGB(255, 16, 15, 14);
 
   static const primaryTextLight = Color(0xFF03080C);
   static const primaryTextDark = Color.fromARGB(255, 255, 255, 255);

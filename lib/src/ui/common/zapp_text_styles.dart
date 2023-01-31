@@ -7,7 +7,7 @@ class ZappFontStyles {
   static TextStyle bodyBoldXs({Color? color}) => GoogleFonts.notoSans(
         color: color,
         fontWeight: FontWeight.w700,
-        fontSize: 12,
+        fontSize: 14,
       );
   static TextStyle bodyBoldS({Color? color}) => GoogleFonts.notoSans(
         color: color,
@@ -28,7 +28,7 @@ class ZappFontStyles {
   static TextStyle bodyMediumXs({Color? color}) => GoogleFonts.notoSans(
         color: color,
         fontWeight: FontWeight.w600,
-        fontSize: 12,
+        fontSize: 14,
       );
   static TextStyle bodyMediumS({Color? color}) => GoogleFonts.notoSans(
         color: color,
@@ -49,7 +49,7 @@ class ZappFontStyles {
   static TextStyle bodyRegularXs({Color? color}) => GoogleFonts.notoSans(
         color: color,
         fontWeight: FontWeight.w400,
-        fontSize: 12,
+        fontSize: 14,
       );
   static TextStyle bodyRegularS({Color? color}) => GoogleFonts.notoSans(
         color: color,

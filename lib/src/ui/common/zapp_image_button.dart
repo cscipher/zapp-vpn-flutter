@@ -4,10 +4,10 @@ import 'package:flutter_svg/svg.dart';
 class ZappImageButton extends StatelessWidget {
   final String path;
   final double size;
-  final Function onPressed;
+  final Function? onPressed;
   const ZappImageButton({
     required this.path,
-    required this.onPressed,
+    this.onPressed,
     this.size = 14,
     super.key,
   });
@@ -15,17 +15,18 @@ class ZappImageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () => onPressed.call(),
-        child: path.contains('.svg')
-            ? SvgPicture.asset(
-                path,
-                height: size,
-                width: size,
-              )
-            : Image.asset(
-                path,
-                height: size,
-                width: size,
-              ));
+      onTap: () => onPressed?.call(),
+      child: path.contains('.svg')
+          ? SvgPicture.asset(
+              path,
+              height: size,
+              width: size,
+            )
+          : Image.asset(
+              path,
+              height: size,
+              width: size,
+            ),
+    );
   }
 }
