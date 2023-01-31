@@ -9,8 +9,7 @@ part 'home_page_event.dart';
 part 'home_page_state.dart';
 
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
-  HomePageBloc() : super(HomePageInitialState()) {
-    on<HomePageInitialEvent>(_mapHomePageInitialEventToState);
+  HomePageBloc() : super(const HomePageLoadingState(dataIndex: 0)) {
     on<HomePageToggleDarkModeEvent>(_handleDarkMode);
     on<HomePageToggleConnectionEvent>(_handleVpnConnection);
     on<HomePageLoadingEvent>(_mapHomePageLoadingEventToState);
@@ -43,13 +42,9 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   }
 
   FutureOr<void> _mapHomePageLoadingEventToState(
-      HomePageLoadingEvent event, Emitter<HomePageState> emit) {
+      HomePageLoadingEvent event, Emitter<HomePageState> emit) async {
     emit(HomePageLoadingState(dataIndex: event.x));
-  }
-
-  FutureOr<void> _mapHomePageInitialEventToState(
-      HomePageInitialEvent event, Emitter<HomePageState> emit) async {
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 1));
     _splashPageCarousalTimer?.cancel();
     cachedLoadedState = const HomePageLoadedState(isDarkModeEnabled: false);
     emit(cachedLoadedState!);

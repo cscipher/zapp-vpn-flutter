@@ -5,6 +5,7 @@ import 'package:zapp_vpn/src/config/theme_config.dart';
 import 'package:zapp_vpn/src/ui/common/zapp_asset_files.dart';
 import 'package:zapp_vpn/src/ui/common/zapp_image_button.dart';
 import 'package:zapp_vpn/src/ui/common/zapp_text_styles.dart';
+import 'package:zapp_vpn/src/ui/common/zapp_theme_mode_switch_widget.dart';
 import 'package:zapp_vpn/src/ui/pages/homepage/bloc/home_page_bloc.dart';
 
 class ZappHomePageHeaderWidget extends StatefulWidget {
@@ -37,19 +38,28 @@ class _ZappHomePageHeaderWidgetState extends State<ZappHomePageHeaderWidget> {
           style: ZappFontStyles.bodyBoldS(),
         ),
         const Spacer(),
-        IconButton(
+        ZappThemeModeSwitchWidget(
+          isDarkModeEnabled: widget.isDarkModeEnabled,
           onPressed: () {
             bloc.add(HomePageToggleDarkModeEvent(
               updateTheme: themeConfig.themeModeSink.add,
             ));
           },
-          icon: Icon(
-            widget.isDarkModeEnabled
-                ? EvaIcons.toggleRight
-                : EvaIcons.toggleLeft,
-            size: 30,
-          ),
         ),
+        const SizedBox(width: 10),
+        // IconButton(
+        //   onPressed: () {
+        //     bloc.add(HomePageToggleDarkModeEvent(
+        //       updateTheme: themeConfig.themeModeSink.add,
+        //     ));
+        //   },
+        //   icon: Icon(
+        //     widget.isDarkModeEnabled
+        //         ? EvaIcons.toggleRight
+        //         : EvaIcons.toggleLeft,
+        //     size: 30,
+        //   ),
+        // ),
         ZappImageButton(
             path: ZappAssetFiles.premiumCrownV2,
             size: 22,

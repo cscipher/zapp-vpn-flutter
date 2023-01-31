@@ -83,7 +83,7 @@ class _SplashPageState extends State<SplashPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 80),
+                    const SizedBox(height: 50),
                     Text(
                       '${ZappStringConstants.copyright} 2023 Cipher RJ',
                       textAlign: TextAlign.center,

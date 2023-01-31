@@ -13,7 +13,6 @@ class ZappHomePage extends StatefulWidget {
 }
 
 class _ZappHomePageState extends State<ZappHomePage> {
-  HomePageBloc? bloc;
   @override
   void initState() {
     super.initState();
@@ -25,32 +24,40 @@ class _ZappHomePageState extends State<ZappHomePage> {
         index: state.dataIndex,
       );
     } else if (state is HomePageLoadedState) {
-      return SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              ZappHomePageHeaderWidget(
-                isDarkModeEnabled: state.isDarkModeEnabled,
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 200,
-                child: const Placeholder(),
-              ),
-              const SizedBox(height: 50),
-              ZappHomePageConnectButtonWidget(
-                connectedSinceString: state.connectedSinceString,
-                vpnConnectionStatus: state.vpnConnectionStatus,
-                isDarkModeEnabled: state.isDarkModeEnabled,
-              ),
-              const Spacer(),
-              ZappHomePageServerSwitcherWidget(
-                isDarkModeEnabled: state.isDarkModeEnabled,
-                vpnConnectionStatus: state.vpnConnectionStatus,
-              ),
-            ],
-          ),
+      return Container(
+        color: theme.backgroundColor,
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).viewPadding.top,
+                      left: 16,
+                      right: 16),
+                  child: ZappHomePageHeaderWidget(
+                    isDarkModeEnabled: state.isDarkModeEnabled,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                  child: const Placeholder(),
+                ),
+                const SizedBox(height: 50),
+                ZappHomePageConnectButtonWidget(
+                  connectedSinceString: state.connectedSinceString,
+                  vpnConnectionStatus: state.vpnConnectionStatus,
+                  isDarkModeEnabled: state.isDarkModeEnabled,
+                ),
+              ],
+            ),
+            ZappHomePageServerSwitcherWidget(
+              isDarkModeEnabled: state.isDarkModeEnabled,
+              vpnConnectionStatus: state.vpnConnectionStatus,
+            ),
+          ],
         ),
       );
     } else {
@@ -62,22 +69,17 @@ class _ZappHomePageState extends State<ZappHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (bloc == null) {
-      bloc = Provider.of<HomePageBloc>(context);
-      bloc!.add(HomePageInitialEvent());
-    }
     final theme = Theme.of(context);
 
     return Scaffold(
-        backgroundColor: theme.backgroundColor,
         body: BlocBuilder<HomePageBloc, HomePageState>(
-          bloc: bloc,
-          builder: (context, state) {
-            return AnimatedSwitcher(
-              duration: const Duration(milliseconds: 350),
-              child: _getPage(state, theme),
-            );
-          },
-        ));
+      bloc: Provider.of<HomePageBloc>(context),
+      builder: (context, state) {
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 350),
+          child: _getPage(state, theme),
+        );
+      },
+    ));
   }
 }
