@@ -4,6 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 class ZappFontStyles {
   ZappFontStyles._();
 
+  static TextStyle custom(
+          {Color? color, required double fontSize, required FontWeight weight}) =>
+      GoogleFonts.notoSans(
+        color: color,
+        fontWeight: weight,
+        fontSize: fontSize,
+      );
+
   static TextStyle bodyBoldXs({Color? color}) => GoogleFonts.notoSans(
         color: color,
         fontWeight: FontWeight.w700,

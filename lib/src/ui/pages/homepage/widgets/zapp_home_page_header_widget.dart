@@ -47,19 +47,6 @@ class _ZappHomePageHeaderWidgetState extends State<ZappHomePageHeaderWidget> {
           },
         ),
         const SizedBox(width: 10),
-        // IconButton(
-        //   onPressed: () {
-        //     bloc.add(HomePageToggleDarkModeEvent(
-        //       updateTheme: themeConfig.themeModeSink.add,
-        //     ));
-        //   },
-        //   icon: Icon(
-        //     widget.isDarkModeEnabled
-        //         ? EvaIcons.toggleRight
-        //         : EvaIcons.toggleLeft,
-        //     size: 30,
-        //   ),
-        // ),
         ZappImageButton(
             path: ZappAssetFiles.premiumCrownV2,
             size: 22,
