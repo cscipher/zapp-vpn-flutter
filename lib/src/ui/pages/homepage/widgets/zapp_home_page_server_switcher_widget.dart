@@ -77,9 +77,9 @@ class _ZappHomePageServerSwitcherWidgetState
                 ),
                 boxShadow: [
                   BoxShadow(
-                    spreadRadius: 20,
-                    blurRadius: 50,
-                    color: Colors.black.withOpacity(0.4),
+                    spreadRadius: 10,
+                    blurRadius: 35,
+                    color: Colors.black.withOpacity(0.2),
                   ),
                 ]),
             child: Column(

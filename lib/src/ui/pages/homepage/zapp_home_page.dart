@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:zapp_vpn/src/config/theme_config.dart';
+import 'package:zapp_vpn/src/ui/common/zapp_asset_files.dart';
+import 'package:zapp_vpn/src/ui/common/zapp_image_button.dart';
+import 'package:zapp_vpn/src/ui/common/zapp_text_styles.dart';
 import 'package:zapp_vpn/src/ui/pages/homepage/bloc/home_page_bloc.dart';
+import 'package:zapp_vpn/src/ui/pages/homepage/widgets/zapp_home_page_drawer_widget.dart';
 import 'package:zapp_vpn/src/ui/pages/homepage/widgets/zapp_home_page_widgets.dart';
 import 'package:zapp_vpn/src/ui/pages/splash_page/splash_page.dart';
 
@@ -30,15 +35,7 @@ class _ZappHomePageState extends State<ZappHomePage> {
           children: [
             Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).viewPadding.top,
-                      left: 16,
-                      right: 16),
-                  child: ZappHomePageHeaderWidget(
-                    isDarkModeEnabled: state.isDarkModeEnabled,
-                  ),
-                ),
+                const SizedBox(height: 10),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   width: MediaQuery.of(context).size.width,
@@ -70,16 +67,57 @@ class _ZappHomePageState extends State<ZappHomePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final bloc = Provider.of<HomePageBloc>(context);
+    final themeConfig = Provider.of<ThemeConfig>(context);
 
-    return Scaffold(
-        body: BlocBuilder<HomePageBloc, HomePageState>(
-      bloc: Provider.of<HomePageBloc>(context),
+    return BlocBuilder<HomePageBloc, HomePageState>(
       builder: (context, state) {
-        return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 350),
-          child: _getPage(state, theme),
-        );
+        return Scaffold(
+            drawer: Drawer(
+              width: 250,
+              backgroundColor: theme.backgroundColor,
+              child: const ZappHomePageDrawerWidget(
+                userName: 'Cipher',
+              ),
+            ),
+            appBar: (state is HomePageLoadingState)
+                ? null
+                : AppBar(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Spacer(),
+                        Text(
+                          'ZAPP VPN',
+                          style: ZappFontStyles.custom(
+                            weight: FontWeight.w800,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const Spacer(),
+                        // ZappThemeModeSwitchWidget(
+                        //   isDarkModeEnabled: false,
+                        //   onPressed: () {
+                        //     bloc.add(HomePageToggleDarkModeEvent(
+                        //       updateTheme: themeConfig.themeModeSink.add,
+                        //     ));
+                        //   },
+                        // ),
+                        const SizedBox(width: 30),
+                        ZappImageButton(
+                            path: ZappAssetFiles.premiumCrownV2,
+                            size: 30,
+                            onPressed: () {
+                              // todo :premium navigation
+                            })
+                      ],
+                    ),
+                  ),
+            body: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 350),
+              child: _getPage(state, theme),
+            ));
       },
-    ));
+    );
   }
 }

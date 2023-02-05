@@ -33,11 +33,7 @@ class _ZappSpeedTestPageState extends State<ZappSpeedTestPage> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
-        backgroundColor: theme.backgroundColor,
-        shadowColor: Colors.transparent,
-        leading: BackButton(
-          color: theme.textTheme.bodyLarge!.color,
-        ),
+        leading: const BackButton(),
         title: Column(
           children: [
             const SizedBox(height: 20),
@@ -147,39 +143,42 @@ class _ZappSpeedTestPageState extends State<ZappSpeedTestPage> {
                 crossFadeState: speedtestStatus.isCompleted
                     ? CrossFadeState.showSecond
                     : CrossFadeState.showFirst,
-                firstChild: speedtestStatus.isRunning
-                    ? const SizedBox.shrink()
-                    : ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: theme.primaryColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                        ),
-                        onPressed: () async {
-                          setState(() {
-                            speedtestStatus = SpeedtestStatus.running;
-                          });
-                          timer = Timer.periodic(
-                              const Duration(milliseconds: 600), (timer) {
+                firstChild: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 500),
+                  child: speedtestStatus.isRunning
+                      ? const SizedBox.shrink()
+                      : ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: theme.primaryColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                          ),
+                          onPressed: () async {
                             setState(() {
-                              speed += Random().nextInt(20);
-                              if (speed > 250) speed = 40;
+                              speedtestStatus = SpeedtestStatus.running;
                             });
-                          });
-                          await Future.delayed(const Duration(seconds: 5));
-                          setState(() {
-                            speedtestStatus = SpeedtestStatus.completed;
-                          });
-                          timer!.cancel();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            'Check now!',
-                            style: ZappFontStyles.bodyMediumM(),
+                            timer = Timer.periodic(
+                                const Duration(milliseconds: 600), (timer) {
+                              setState(() {
+                                speed += Random().nextInt(20);
+                                if (speed > 250) speed = 40;
+                              });
+                            });
+                            await Future.delayed(const Duration(seconds: 5));
+                            setState(() {
+                              speedtestStatus = SpeedtestStatus.completed;
+                            });
+                            timer!.cancel();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text(
+                              'Check now!',
+                              style: ZappFontStyles.bodyMediumM(),
+                            ),
                           ),
                         ),
-                      ),
+                ),
                 secondChild: Column(
                   children: [
                     SpeedtestResultWidget(
