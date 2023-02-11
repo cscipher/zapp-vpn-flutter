@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "zapp_vpn" "\0"
+            VALUE "CompanyName", "com.cipher" "\0"
+            VALUE "FileDescription", "zappVpn" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "zapp_vpn" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "zapp_vpn.exe" "\0"
-            VALUE "ProductName", "zapp_vpn" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 com.cipher. All rights reserved." "\0"
+            VALUE "OriginalFilename", "zappVpn.exe" "\0"
+            VALUE "ProductName", "zappVpn" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
