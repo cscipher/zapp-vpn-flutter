@@ -72,18 +72,18 @@ class _ZappHomePageConnectButtonWidgetState
     return AbsorbPointer(
       absorbing: isConnecting,
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
           if (isNotConnected) {
             controller.reset();
             bloc.add(
-              const HomePageToggleConnectionEvent(
-                  VPNConnectionStatus.connecting),
+              HomePageToggleConnectionEvent(
+                  context, VPNConnectionStatus.connecting),
             );
           } else {
             controller.forward();
             bloc.add(
-              const HomePageToggleConnectionEvent(
-                  VPNConnectionStatus.notConnected),
+              HomePageToggleConnectionEvent(
+                  context, VPNConnectionStatus.notConnected),
             );
           }
         },
