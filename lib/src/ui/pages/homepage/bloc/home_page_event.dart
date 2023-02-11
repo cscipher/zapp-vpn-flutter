@@ -20,8 +20,13 @@ class HomePageToggleDarkModeEvent extends HomePageEvent {
 }
 
 class HomePageToggleConnectionEvent extends HomePageEvent {
+  final BuildContext context;
   final VPNConnectionStatus vpnConnectionStatus;
-  const HomePageToggleConnectionEvent(this.vpnConnectionStatus);
+  const HomePageToggleConnectionEvent(this.context, this.vpnConnectionStatus);
 }
 
-class HomePageVpnConnectedTimeStringEvent extends HomePageEvent {}
+class HomePageVpnStatusEvent extends HomePageEvent {
+  final VpnStatus? vpnStatus;
+  final bool error;
+  const HomePageVpnStatusEvent({this.vpnStatus, this.error = false});
+}

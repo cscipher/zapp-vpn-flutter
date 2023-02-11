@@ -45,3 +45,15 @@ class HomePageLoadedState extends HomePageState {
     );
   }
 }
+
+abstract class HomePageActionState extends HomePageState {
+  const HomePageActionState();
+  @override
+  List<Object> get props => [];
+}
+
+class HomePageVpnConnectionErrorState extends HomePageActionState {
+  const HomePageVpnConnectionErrorState();
+  // @override
+  // List<Object> get props => [DateTime.now()];
+}

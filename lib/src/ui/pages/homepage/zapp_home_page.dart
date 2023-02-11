@@ -9,6 +9,7 @@ import 'package:zapp_vpn/src/ui/pages/homepage/bloc/home_page_bloc.dart';
 import 'package:zapp_vpn/src/ui/pages/homepage/widgets/zapp_home_page_drawer_widget.dart';
 import 'package:zapp_vpn/src/ui/pages/homepage/widgets/zapp_home_page_widgets.dart';
 import 'package:zapp_vpn/src/ui/pages/splash_page/splash_page.dart';
+import 'package:zapp_vpn/src/utils/zapp_snackbar.dart';
 
 class ZappHomePage extends StatefulWidget {
   const ZappHomePage({super.key});
@@ -70,7 +71,17 @@ class _ZappHomePageState extends State<ZappHomePage> {
     final bloc = Provider.of<HomePageBloc>(context);
     final themeConfig = Provider.of<ThemeConfig>(context);
 
-    return BlocBuilder<HomePageBloc, HomePageState>(
+    return BlocConsumer<HomePageBloc, HomePageState>(
+      bloc: bloc,
+      listenWhen: (previous, current) => current is HomePageActionState,
+      listener: (context, state) {
+        if (state is HomePageVpnConnectionErrorState) {
+          showZappSnackbar(context,
+              message: 'Cannot connect at this time. Try again!');
+          return;
+        }
+      },
+      buildWhen: (previous, current) => current is! HomePageActionState,
       builder: (context, state) {
         return Scaffold(
             drawer: Drawer(
@@ -95,14 +106,6 @@ class _ZappHomePageState extends State<ZappHomePage> {
                           ),
                         ),
                         const Spacer(),
-                        // ZappThemeModeSwitchWidget(
-                        //   isDarkModeEnabled: false,
-                        //   onPressed: () {
-                        //     bloc.add(HomePageToggleDarkModeEvent(
-                        //       updateTheme: themeConfig.themeModeSink.add,
-                        //     ));
-                        //   },
-                        // ),
                         const SizedBox(width: 30),
                         ZappImageButton(
                             path: ZappAssetFiles.premiumCrownV2,
