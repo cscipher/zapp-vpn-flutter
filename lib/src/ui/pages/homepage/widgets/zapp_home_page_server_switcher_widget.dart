@@ -37,13 +37,17 @@ class _ZappHomePageServerSwitcherWidgetState
           onTap: () {
             showModalBottomSheet(
               context: context,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30)),
               ),
               builder: (context) => Container(
                 decoration: BoxDecoration(
                   color: theme.backgroundColor,
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30)),
                 ),
                 child: Column(
                   children: [
@@ -66,7 +70,9 @@ class _ZappHomePageServerSwitcherWidgetState
           },
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30)),
                 gradient: const LinearGradient(
                   colors: [
                     ZappColorConstants.primaryColorLight,
