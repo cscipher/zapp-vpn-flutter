@@ -183,18 +183,19 @@ gyaBnqY5yUG8txe217R/2ViMcJBIn3x7eIqOJyYt+KDTHAO54VV2+91zoBcssVs2
 
 ''';
 
-class ZappVpnConfig {
+class ZappVpnConnectionService {
   // Singleton initialization
-  ZappVpnConfig._();
+  ZappVpnConnectionService._();
 
-  static final _instance = ZappVpnConfig._();
+  static final _instance = ZappVpnConnectionService._();
 
-  static ZappVpnConfig get instance => _instance;
+  static ZappVpnConnectionService get instance => _instance;
 
   // config starts here
   static late OpenVPN openVPNEngine;
 
   bool _errorComplete = false;
+  bool _disconnectComplete = false;
 
   void init(
       {required Function(VpnStatus? status, bool error)
@@ -213,6 +214,9 @@ class ZappVpnConfig {
                 stage == VPNStage.exiting)) {
           connectionStatusChangeCallback.call(null, true);
           _errorComplete = true;
+        } else if (_disconnectComplete && stage == VPNStage.disconnected) {
+          connectionStatusChangeCallback.call(null, false);
+          _disconnectComplete = false;
         }
       },
     );
@@ -234,6 +238,7 @@ class ZappVpnConfig {
   }
 
   void disconnected() async {
+    _disconnectComplete = true;
     openVPNEngine.disconnect();
   }
 }
