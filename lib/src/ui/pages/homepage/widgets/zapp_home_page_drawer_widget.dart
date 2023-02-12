@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:zapp_vpn/src/config/theme_config.dart';
 import 'package:zapp_vpn/src/ui/common/zapp_asset_files.dart';
 import 'package:zapp_vpn/src/ui/common/zapp_image_button.dart';
 import 'package:zapp_vpn/src/ui/common/zapp_navigation_routes.dart';
+import 'package:zapp_vpn/src/ui/common/zapp_string_constants.dart';
 import 'package:zapp_vpn/src/ui/common/zapp_text_styles.dart';
 import 'package:zapp_vpn/src/ui/pages/homepage/bloc/home_page_bloc.dart';
 import 'package:zapp_vpn/src/utils/zapp_navigation_util.dart';
@@ -99,12 +104,32 @@ class _ZappHomePageDrawerWidgetState extends State<ZappHomePageDrawerWidget> {
           iconData: EvaIcons.infoOutline,
         ),
         _getDrawerItem(
-          onTap: () {},
+          onTap: () {
+            Share.share(
+              'Check out this best VPN app! ${ZappStringConstants.thunder}',
+              subject: 'ZAPP VPN! ${ZappStringConstants.thunder}',
+            );
+          },
           label: 'Share App',
           iconData: EvaIcons.shareOutline,
         ),
         _getDrawerItem(
-          onTap: () {},
+          onTap: () {
+            if (Platform.isAndroid || Platform.isIOS) {
+              final appId = Platform.isAndroid
+                  ? 'YOUR_ANDROID_PACKAGE_ID'
+                  : 'YOUR_IOS_APP_ID';
+              final url = Uri.parse(
+                Platform.isAndroid
+                    ? "market://details?id=$appId"
+                    : "https://apps.apple.com/app/id$appId",
+              );
+              launchUrl(
+                url,
+                mode: LaunchMode.externalApplication,
+              );
+            }
+          },
           label: 'Rate us',
           iconData: EvaIcons.starOutline,
         ),
