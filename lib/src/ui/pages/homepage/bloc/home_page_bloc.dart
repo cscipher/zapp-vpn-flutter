@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:openvpn_flutter/openvpn_flutter.dart';
-import 'package:zapp_vpn/src/config/zapp_vpn_config.dart';
+import 'package:zapp_vpn/src/config/zapp_vpn_connection_service.dart';
 import 'package:zapp_vpn/src/ui/pages/splash_page/splash_page_data.dart';
 import 'package:zapp_vpn/src/utils/zapp_enums.dart';
 
@@ -13,7 +13,7 @@ part 'home_page_state.dart';
 
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   HomePageBloc() : super(const HomePageLoadingState(dataIndex: 0)) {
-    ZappVpnConfig.instance.init(
+    ZappVpnConnectionService.instance.init(
       connectionStatusChangeCallback: (status, error) {
         add(HomePageVpnStatusEvent(vpnStatus: status, error: error));
       },
@@ -75,10 +75,10 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           vpnConnectionStatus: event.vpnConnectionStatus,
         );
         emit(cachedLoadedState!);
-        ZappVpnConfig.instance.connect();
+        ZappVpnConnectionService.instance.connect();
       } else if (event.vpnConnectionStatus ==
           VPNConnectionStatus.notConnected) {
-        ZappVpnConfig.instance.disconnected();
+        ZappVpnConnectionService.instance.disconnected();
       }
     }
   }
@@ -90,7 +90,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
     cachedLoadedState = cachedLoadedState!.copyWith(
       connectedSinceString: event.vpnStatus?.duration ?? '',
-      vpnConnectionStatus: event.vpnStatus?.connectedOn != null
+      vpnConnectionStatus: event.vpnStatus != null
           ? VPNConnectionStatus.connected
           : VPNConnectionStatus.notConnected,
     );

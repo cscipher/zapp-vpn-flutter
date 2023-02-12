@@ -148,7 +148,7 @@ class _ZappHomePageConnectButtonWidgetState
                   Visibility(
                     visible: isConnected,
                     child: Align(
-                      child: Lottie.network(
+                      child: Lottie.asset(
                         ZappAssetFiles.bolt,
                         height: 250,
                       ),
@@ -159,7 +159,7 @@ class _ZappHomePageConnectButtonWidgetState
                     child: Align(
                       child: Transform.rotate(
                         angle: 1.78,
-                        child: Lottie.network(
+                        child: Lottie.asset(
                           ZappAssetFiles.bolt,
                           height: 250,
                         ),
