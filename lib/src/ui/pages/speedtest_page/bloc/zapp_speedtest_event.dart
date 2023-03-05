@@ -22,18 +22,20 @@ class ZappSpeedtestResetEvent extends ZappSpeedtestEvent {}
 class ZappSpeedtestUpdateConnectionDataEvent extends ZappSpeedtestEvent {
   final double uploadTransferRate;
   final double downloadTransferRate;
-  final SpeedUnit unit;
+  final SpeedUnit? downloadUnit;
+  final SpeedUnit? uploadUnit;
   final SpeedtestType speedtestType;
   final SpeedtestStatus speedtestStatus;
 
   final bool isError;
 
   const ZappSpeedtestUpdateConnectionDataEvent({
+    this.downloadUnit,
+    this.uploadUnit,
     required this.speedtestStatus,
-    this.downloadTransferRate = 0.0,
-    this.uploadTransferRate = 0.0,
-    this.unit = SpeedUnit.Mbps,
     required this.speedtestType,
     this.isError = false,
+    this.uploadTransferRate = 0.0,
+    this.downloadTransferRate = 0.0,
   });
 }

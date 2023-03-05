@@ -18,7 +18,7 @@ class ZappSpeedtestConnectionState extends ZappSpeedtestState {
   const ZappSpeedtestConnectionState({
     this.uploadTransferRate = 0.0,
     this.downloadTransferRate = 0.0,
-    this.speedUnit = SpeedUnit.Kbps,
+    this.speedUnit = SpeedUnit.kbps,
     this.speedtestType = SpeedtestType.none,
     this.speedtestStatus = SpeedtestStatus.notStarted,
   });

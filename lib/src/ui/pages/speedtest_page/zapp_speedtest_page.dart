@@ -1,7 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:internet_speed_test/callbacks_enum.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:zapp_vpn/src/ui/common/zapp_string_constants.dart';
 import 'package:zapp_vpn/src/ui/common/zapp_text_styles.dart';
@@ -17,7 +16,7 @@ class ZappSpeedTestPage extends StatefulWidget {
 }
 
 class _ZappSpeedTestPageState extends State<ZappSpeedTestPage> {
-  final double maxSpeed = 50.0;
+  final double maxSpeed = 100.0;
   final bloc = ZappSpeedtestBloc();
 
   @override
@@ -182,9 +181,7 @@ class _ZappSpeedTestPageState extends State<ZappSpeedTestPage> {
                             ),
                             GaugeAnnotation(
                               widget: Text(
-                                state.speedUnit == SpeedUnit.Mbps
-                                    ? 'Mbps'
-                                    : 'Kbps',
+                                state.speedUnit.name,
                                 style: ZappFontStyles.bodyMediumS(
                                   color: theme.secondaryHeaderColor,
                                 ),

@@ -48,12 +48,15 @@ dependencies:
   tuple: ^2.0.1
 
   #custom package
-  internet_speed_test:
-    path: packages/internet_speed_test/internet_speed_test-master
+  # internet_speed_test:
+  #   path: packages/internet_speed_test-master
+
+  flutter_internet_speed_test: 1.3.0
 
   share_plus: ^6.3.1
   webview_flutter: ^4.0.2
   url_launcher: ^6.1.9
+  path_provider: ^2.0.12
 
 dev_dependencies:
   flutter_test:
